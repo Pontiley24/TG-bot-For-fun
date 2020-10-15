@@ -4,13 +4,13 @@ import random
 
 from telebot import types
 
-owm = pyowm.OWM('token', language = "en")
-bot = telebot.TeleBot("token")
-@bot.message_handler(commands=['start'])
+owm = pyowm.OWM('token', language = "en") #token for pyowm
+bot = telebot.TeleBot("token") #token for bot
+@bot.message_handler(commands=['start']) #Hello message
 def welcome(message):
-    sti = open('sticker', 'rb')
-    bot.send_sticker(message.chat.id, sti)
-
+    sti = open('sticker', 'rb') #sticker
+    bot.send_sticker(message.chat.id, sti) #send sticker
+# buttons in bot
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     item1 = types.KeyboardButton("Complement")
     item2 = types.KeyboardButton("Winner")
@@ -21,34 +21,34 @@ def welcome(message):
     markup.add(item3)
 
 
-    bot.send_message(message.chat.id, "I'm bot gift 🎁", reply_markup=markup)
+    bot.send_message(message.chat.id, "I'm bot gift 🎁", reply_markup=markup) # bot message
 
 
-
+# how buttons work
 @bot.message_handler(content_types=['text'])
 def lalala(message):
-    if message.text == 'Complement':
+    if message.text == 'Complement':  #How work button
         list = ["List with compliments"]
-        bot.send_message(message.chat.id, str(random.choice(list)))
+        bot.send_message(message.chat.id, str(random.choice(list))) # How work choice
     elif message.text == 'Winner':
         list2 = ["Player 1", "Player 2"]
-        bot.send_message(message.chat.id, str(random.choice(list2)))
+        bot.send_message(message.chat.id, str(random.choice(list2))) # how work weather 
     elif message.text == 'Weather':
         bot.send_message(message.chat.id, str("Send city"))
     elif message.text == 'text':
-        bot.send_message(message.chat.id, str("cool text)"))
+        bot.send_message(message.chat.id, str("cool text)")) # secret function)
     else:
         bot.send_message(message.chat.id, 'I dont know what you send')
-      #list3 = ['city']
+        list3 = ['city']
     if message.text == 'city':
 
-            observation = owm.weather_at_place(message.text)
+            observation = owm.weather_at_place(message.text) #what city
             w = observation.get_weather()
-            temp = int(w.get_temperature('celsius')["temp"])
-
+            temp = int(w.get_temperature('celsius')["temp"]) #temperature
+#bot send what temperature in city
             answer = "in " + message.text + " now " + w.get_detailed_status() + "\n"
             answer += "Temperature  " + str(temp) + "\n\n"
-
+# what bot send if...
             if temp <= 0:
                     answer += ("answer 1")
             elif temp <= 13:
